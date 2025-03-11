@@ -83,4 +83,4 @@ ip r add ${UE_IPV4_IMS} via ${UPF_IP}
 # Sync docker time
 #ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-exec /usr/sbin/opensips -F $@
+exec /usr/sbin/opensips -m 1024 -F $@
