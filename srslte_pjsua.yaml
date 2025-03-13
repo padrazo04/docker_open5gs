@@ -1,0 +1,60 @@
+version: '3'
+services:
+  srsue_zmq:
+    # image: docker_srslte
+    build: pjsip
+    # container_name: srsue_zmq_pjsip
+    depends_on:
+      - srsenb_zmq
+    stdin_open: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    volumes:
+      - ./srslte:/mnt/srslte
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    environment:
+      - COMPONENT_NAME=ue_zmq
+      - SRS_ENB_IP=${SRS_ENB_IP}
+      - SRS_UE_IP=${SRS_UE_IP}
+      - UE1_IMSI=${UE1_IMSI}
+    expose:
+      - "2000/tcp"
+      - "2001/tcp"
+    networks:
+      default:
+        ipv4_address: ${SRS_UE_IP}
+  srsenb_zmq:
+    image: docker_srslte
+    # container_name: srsenb_zmq_pjsip
+    stdin_open: true
+    tty: true
+    privileged: true
+    volumes:
+      - ./srslte:/mnt/srslte
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    environment:
+      - COMPONENT_NAME=enb_zmq
+      - SRS_ENB_IP=${SRS_ENB_IP}
+      - SRS_UE_IP=${SRS_UE_IP}
+      - UE1_IMSI=${UE1_IMSI}
+    expose:
+      - "36412/sctp"
+      - "2152/udp"
+      - "2000/tcp"
+      - "2001/tcp"
+    networks:
+      default:
+        ipv4_address: ${SRS_ENB_IP}
+
+networks:
+  default:
+    external:
+      name: docker_open5gs_default
