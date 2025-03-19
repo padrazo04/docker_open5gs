@@ -2,7 +2,9 @@ version: '3'
 services:
   srsue_zmq:
     # image: docker_srslte
-    build: pjsip
+    build:
+      context: pjsip
+      dockerfile: srslte.Dockerfile
     # container_name: srsue_zmq_pjsip
     depends_on:
       - srsenb_zmq
