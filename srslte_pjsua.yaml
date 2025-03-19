@@ -3,7 +3,7 @@ services:
   srsue_zmq:
     # image: docker_srslte
     build:
-      context: pjsip
+      context: pjsua
       dockerfile: srslte.Dockerfile
     # container_name: srsue_zmq_pjsip
     depends_on:

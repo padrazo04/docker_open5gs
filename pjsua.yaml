@@ -3,7 +3,7 @@ services:
   pjsua:
     # image: docker_srslte
     build:
-      context: pjsip
+      context: pjsua
       dockerfile: pulse.Dockerfile
     # container_name: srsue_zmq_pjsip
     stdin_open: true
