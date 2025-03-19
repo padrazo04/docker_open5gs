@@ -1,0 +1,31 @@
+version: '3'
+services:
+  pjsua:
+    # image: docker_srslte
+    build:
+      context: pjsip
+      dockerfile: pulse.Dockerfile
+    # container_name: srsue_zmq_pjsip
+    stdin_open: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    # privileged: true
+    volumes:
+      - /run/user/${UID:-1000}/pulse:/run/user/0/pulse
+      - ${HOME}/.config/pulse/cookie:/root/.config/pulse/cookie
+    env_file:
+      - .env
+    environment:
+      - UE1_IMSI=${UE1_IMSI}
+      - UE1_KI=${UE1_KI}
+      - UE1_OP=${UE1_OP}
+      - UE1_AMF=${UE1_AMF}
+    networks:
+      default:
+        ipv4_address: ${PJSUA_UE_IP}
+
+networks:
+  default:
+    external:
+      name: docker_open5gs_default
