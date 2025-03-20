@@ -15,7 +15,7 @@ pjsua \
     --realm=ims.mnc001.mcc001.3gppnetwork.org \
     --username=$UE1_IMSI@ims.mnc001.mcc001.3gppnetwork.org \
     --password="$(echo $UE1_KI | xxd -r -p)" \
-    --op="$(echo $UE1_OP | xxd -r -p)" \
-    --amf="$(echo $UE1_AMF | xxd -r -p)" \
+    --aka-op="$(echo $UE1_OP | xxd -r -p)" \
+    --aka-amf="$(echo $UE1_AMF | xxd -r -p)" \
     --use-ims \
     $@
